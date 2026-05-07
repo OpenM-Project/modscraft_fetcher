@@ -160,7 +160,7 @@ for key, vers in grouped.items():
 twenty_six_versions = {k: v for k, v in latest_releases.items() if k.startswith('26.')}
 if twenty_six_versions:
     # Create version/26/index.md
-    markdown_26 = page_header + "## Minecraft 26 Versions\n\n| | | |\n|-|-|-|\n"
+    markdown_26 = page_header + "## Minecraft 26 Versions\n\n"
     links_26 = []
     for key, (version, url) in sorted(twenty_six_versions.items(), key=lambda x: parse_version(x[0]), reverse=True):
         minor = version.split('.')[1]
@@ -180,7 +180,7 @@ for title, release in releases.items():
         print(f"! ModsCraft returned {resp.status_code}")
         sys.exit(1)
     rel_soup = bs4.BeautifulSoup(ver.text, "html.parser")
-    version_output = page_header + f"## Minecraft {title} APKs\n"
+    version_output = page_header + f"## Minecraft {title} APKs\n\n"
     version_output += "| Download | Size |\n"
     version_output += "|----------|------|\n"
     for download in rel_soup.find_all("div", class_="file-block"):
@@ -199,10 +199,10 @@ for title, release in releases.items():
             # For old versions, extract filename from title
             file_name = file_title.replace("Download ", "").replace("Minecraft ", "minecraft-").replace(" ", "-").lower() + ".apk"
         meta = meta_div.text
-        size = meta.split(']')[0][1:]  # [738.16 Mb] -> 738.16 Mb
+        size = meta.split(']')[0][1:].strip()  # [738.16 Mb] -> 738.16 Mb
         download_link = btn_a["href"]
         print(file_name)
-        version_output += f"| [:package: `{file_name}`]({download_link}) | :floppy_disk: {size} \n"
+        version_output += f"| :package: `{file_name}` | :floppy_disk: {size} |\n"
     print(f"= Finished work on version {title}")
     parts = title.split('.')
     if len(parts) >= 2:
