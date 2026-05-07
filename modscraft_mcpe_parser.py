@@ -18,15 +18,16 @@ if len(sys.argv) != 2:
 def pathify(string):
     return re.sub(r'[^a-z0-9_.-]', '', string.replace(' ', '_').lower())
 
-def create_md_table(data, width):
-    header = "| " + " | ".join([" " for _ in range(width)]) + " |\n"
+def create_md_table(data, headers):
+    width = len(headers)
+    header = "| " + " | ".join(headers) + " |\n"
     separator = "| " + " | ".join(["---" for _ in range(width)]) + " |\n"
-    table = header + separator
+    table = "\n" + header + separator
     for i in range(0, len(data), width):
         row = data[i:i + width]
         row += [""] * (width - len(row))
         table += "| " + " | ".join(row) + " |\n"
-    return table
+    return table + "\n"
 
 front_matter = "---\nlayout: default\n---\n\n"
 
@@ -143,7 +144,7 @@ def build_main_links(latest_releases, version_prefix=""):
             parts = title.split('.')
             link = f"{version_prefix}{parts[0]}/{parts[1]}/mc{pathify(version)}.html"
         old_links.append(f"**[:package: Minecraft {title}]({link})**")
-    return create_md_table(old_links, 3)
+    return create_md_table(old_links, [" ", " ", " "])
 
 # Group by major.minor and select latest
 grouped = {}
@@ -170,7 +171,7 @@ if twenty_six_versions:
         minor = version.split('.')[1]
         file_name = f"mc{pathify(version)}.html"
         links_26.append(f"**[:package: Minecraft {version}]({minor}/{file_name})**")
-    markdown_26 += create_md_table(links_26, 3) + footer_note
+    markdown_26 += create_md_table(links_26, [" ", " ", " "]) + footer_note
     os.makedirs(os.path.join(writedir, "version", "26"), exist_ok=True)
     with open(os.path.join(writedir, "version", "26", "index.md"), "w") as f:
         f.write(markdown_26)
@@ -184,9 +185,8 @@ for title, release in releases.items():
         print(f"! ModsCraft returned {resp.status_code}")
         sys.exit(1)
     rel_soup = bs4.BeautifulSoup(ver.text, "html.parser")
-    version_output = page_header + f"## Minecraft {title} APKs\n\n"
-    version_output += "| Download | Size |\n"
-    version_output += "|----------|------|\n"
+    version_output = page_header + f"## Minecraft {title} APKs\n"
+    file_info = []
     for download in rel_soup.find_all("div", class_="file-block"):
         print("* Adding file ", end='')
         title_span = download.find("span", class_="file-block__title")
@@ -206,7 +206,9 @@ for title, release in releases.items():
         size = meta.split(']')[0][1:].strip()  # [738.16 Mb] -> 738.16 Mb
         download_link = btn_a["href"]
         print(file_name)
-        version_output += f"| :package: `{file_name}` | :floppy_disk: {size} |\n"
+        file_info.extend([f":package: `{file_name}`", f":floppy_disk: {size}"])
+
+    version_output += create_md_table(file_info, ["Download", "Size"])
     print(f"= Finished work on version {title}")
     parts = title.split('.')
     if len(parts) >= 2:
