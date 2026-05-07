@@ -1,3 +1,7 @@
+---
+layout: null
+---
+
 ## Minecraft 1.13 APKs
 | Download | Size |
 |----------|------|

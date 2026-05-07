@@ -1,3 +1,7 @@
+---
+layout: null
+---
+
 ## Minecraft 1.26 APKs
 | Download | Size |
 |----------|------|

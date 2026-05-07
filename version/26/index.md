@@ -1,3 +1,7 @@
+---
+layout: null
+---
+
 ## Minecraft 26 Versions
 
 | | | |

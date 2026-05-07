@@ -1,3 +1,7 @@
+---
+layout: null
+---
+
 ## Minecraft 1.10 APKs
 | Download | Size |
 |----------|------|

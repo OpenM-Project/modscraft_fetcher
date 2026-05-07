@@ -1,3 +1,7 @@
+---
+layout: null
+---
+
 ## Minecraft 1.8 APKs
 | Download | Size |
 |----------|------|

@@ -1,3 +1,7 @@
+---
+layout: null
+---
+
 ## Minecraft 1.11 APKs
 | Download | Size |
 |----------|------|

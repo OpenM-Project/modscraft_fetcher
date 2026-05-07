@@ -1,3 +1,7 @@
+---
+layout: null
+---
+
 ## Minecraft 1.20 APKs
 | Download | Size |
 |----------|------|

@@ -1,3 +1,7 @@
+---
+layout: null
+---
+
 ## Minecraft 1.17 APKs
 | Download | Size |
 |----------|------|

@@ -1,3 +1,7 @@
+---
+layout: null
+---
+
 ## Minecraft 1.2 APKs
 | Download | Size |
 |----------|------|

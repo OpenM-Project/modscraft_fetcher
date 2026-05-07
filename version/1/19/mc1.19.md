@@ -1,3 +1,7 @@
+---
+layout: null
+---
+
 ## Minecraft 1.19 APKs
 | Download | Size |
 |----------|------|

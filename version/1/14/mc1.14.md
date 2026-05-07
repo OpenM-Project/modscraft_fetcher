@@ -1,3 +1,7 @@
+---
+layout: null
+---
+
 ## Minecraft 1.14 APKs
 | Download | Size |
 |----------|------|

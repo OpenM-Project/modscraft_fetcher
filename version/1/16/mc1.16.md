@@ -1,3 +1,7 @@
+---
+layout: null
+---
+
 ## Minecraft 1.16 APKs
 | Download | Size |
 |----------|------|

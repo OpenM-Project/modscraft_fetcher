@@ -1,3 +1,7 @@
+---
+layout: null
+---
+
 ## Minecraft 1.21 APKs
 | Download | Size |
 |----------|------|

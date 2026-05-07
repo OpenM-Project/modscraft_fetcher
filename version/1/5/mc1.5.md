@@ -1,3 +1,7 @@
+---
+layout: null
+---
+
 ## Minecraft 1.5 APKs
 | Download | Size |
 |----------|------|

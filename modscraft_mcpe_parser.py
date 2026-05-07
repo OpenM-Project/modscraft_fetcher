@@ -24,6 +24,8 @@ def create_md_table(data, width):
         table += "| " + " | ".join(data[i:i + width]) + " |\n"
     return table
 
+front_matter = "---\nlayout: null\n---\n\n"
+
 user_agents = [
     "Mozilla/5.0 (Linux; Android 13; SM-M127G Build/TP1A.220624.014; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/126.0.6478.134 Mobile Safari/537.36",
     "Mozilla/5.0 (Android 11; Mobile; rv:128.0) Gecko/128.0 Firefox/128.0",
@@ -47,7 +49,7 @@ user_agents = [
 user_agent = random.choice(user_agents)
 print(f"* Parser has started")
 print(f"= User agent for today is \"{user_agent}\"")
-markdown_output = f"- :open_file_folder: Source available at [**ModsCraft.Net**](https://modscraft.net/en/mcpe/)"
+markdown_output = front_matter + f"- :open_file_folder: Source available at [**ModsCraft.Net**](https://modscraft.net/en/mcpe/)"
 markdown_output += f"\n- :clock2: Updated **every 72 hours** at `00:00 UTC`"
 markdown_output += f"\n- :rocket: **Last update:** `{datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S')} UTC`\n"
 print("* Creating directory 'version'")
@@ -130,7 +132,7 @@ for key, vers in grouped.items():
 twenty_six_versions = {k: v for k, v in latest_releases.items() if k.startswith('26.')}
 if twenty_six_versions:
     # Create version/26/index.md
-    markdown_26 = "## Minecraft 26 Versions\n\n| | | |\n|-|-|-|\n"
+    markdown_26 = front_matter + "## Minecraft 26 Versions\n\n| | | |\n|-|-|-|\n"
     links_26 = []
     for key, (version, url) in sorted(twenty_six_versions.items(), key=lambda x: parse_version(x[0]), reverse=True):
         minor = version.split('.')[1]
@@ -150,7 +152,7 @@ for title, release in releases.items():
         print(f"! ModsCraft returned {resp.status_code}")
         sys.exit(1)
     rel_soup = bs4.BeautifulSoup(ver.text, "html.parser")
-    version_output = f"## Minecraft {title} APKs\n"
+    version_output = front_matter + f"## Minecraft {title} APKs\n"
     version_output += "| Download | Size |\n"
     version_output += "|----------|------|\n"
     for download in rel_soup.find_all("div", class_="file-block"):
