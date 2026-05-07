@@ -57,7 +57,7 @@ tbody tr:nth-child(even) { background: #f8fafc; }
 .footer-note { margin-top: 2rem; color: var(--muted); font-size: 0.95rem; }
 </style>\n\n"""
 footer_note = "\n---\n*Built with Jekyll and fallback CSS.*\n"
-page_header = front_matter + fallback_style
+page_header = front_matter
 
 user_agents = [
     "Mozilla/5.0 (Linux; Android 13; SM-M127G Build/TP1A.220624.014; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/126.0.6478.134 Mobile Safari/537.36",
@@ -171,7 +171,7 @@ if twenty_six_versions:
         minor = version.split('.')[1]
         file_name = f"mc{pathify(version)}.html"
         links_26.append(f"**[:package: Minecraft {version}]({minor}/{file_name})**")
-    markdown_26 += create_md_table(links_26, [" ", " ", " "]) + footer_note
+    markdown_26 += create_md_table(links_26, [" ", " ", " "]) + footer_note + fallback_style
     os.makedirs(os.path.join(writedir, "version", "26"), exist_ok=True)
     with open(os.path.join(writedir, "version", "26", "index.md"), "w") as f:
         f.write(markdown_26)
@@ -185,7 +185,7 @@ for title, release in releases.items():
         print(f"! ModsCraft returned {resp.status_code}")
         sys.exit(1)
     rel_soup = bs4.BeautifulSoup(ver.text, "html.parser")
-    version_output = page_header + f"## Minecraft {title} APKs\n"
+    version_output = page_header + f"## Minecraft {title} APKs\n\n"
     file_info = []
     for download in rel_soup.find_all("div", class_="file-block"):
         print("* Adding file ", end='')
@@ -224,7 +224,7 @@ for title, release in releases.items():
         file_path = os.path.join(writedir, "version", filename)
     try:
         with open(file_path, "w") as f:
-            f.write(version_output + footer_note)
+            f.write(version_output + footer_note + fallback_style)
     except PermissionError:
         print("! Unable to access file, not enough permissions")
         sys.exit(1)
@@ -239,7 +239,7 @@ markdown_output += f"\n{build_main_links(latest_releases, 'version/')}"
 print("\n= All done, writing to file")
 try:
     with open(os.path.join(sys.argv[1]), "w") as f:
-        f.write(markdown_output + footer_note)
+        f.write(markdown_output + footer_note + fallback_style)
 except PermissionError:
     print("! Unable to access file, not enough permissions")
     sys.exit(1)
