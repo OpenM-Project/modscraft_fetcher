@@ -24,8 +24,6 @@ def create_md_table(data, width):
         table += "| " + " | ".join(data[i:i + width]) + " |\n"
     return table
 
-front_matter = "---\nlayout: null\n---\n\n"
-
 user_agents = [
     "Mozilla/5.0 (Linux; Android 13; SM-M127G Build/TP1A.220624.014; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/126.0.6478.134 Mobile Safari/537.36",
     "Mozilla/5.0 (Android 11; Mobile; rv:128.0) Gecko/128.0 Firefox/128.0",
