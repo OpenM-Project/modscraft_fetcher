@@ -185,8 +185,7 @@ for title, release in releases.items():
         print(f"! ModsCraft returned {resp.status_code}")
         sys.exit(1)
     rel_soup = bs4.BeautifulSoup(ver.text, "html.parser")
-    version_output = page_header + f"## Minecraft {title} APKs\n"
-    file_info = []
+    version_output = front_matter + f"## Minecraft {title} APKs\n\n"
     for download in rel_soup.find_all("div", class_="file-block"):
         print("* Adding file ", end='')
         title_span = download.find("span", class_="file-block__title")
@@ -206,9 +205,8 @@ for title, release in releases.items():
         size = meta.split(']')[0][1:].strip()  # [738.16 Mb] -> 738.16 Mb
         download_link = btn_a["href"]
         print(file_name)
-        file_info.extend([f":package: `{file_name}`", f":floppy_disk: {size}"])
+        version_output += f"- :package: **{file_name}** — :floppy_disk: `{size}`\n"
 
-    version_output += create_md_table(file_info, ["Download", "Size"])
     print(f"= Finished work on version {title}")
     parts = title.split('.')
     if len(parts) >= 2:
@@ -223,7 +221,7 @@ for title, release in releases.items():
         file_path = os.path.join(writedir, "version", filename)
     try:
         with open(file_path, "w") as f:
-            f.write(version_output + footer_note)
+            f.write(version_output)
     except PermissionError:
         print("! Unable to access file, not enough permissions")
         sys.exit(1)
