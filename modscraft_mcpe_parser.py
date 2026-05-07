@@ -19,9 +19,13 @@ def pathify(string):
     return re.sub(r'[^a-z0-9_.-]', '', string.replace(' ', '_').lower())
 
 def create_md_table(data, width):
-    table = f"{'| ' * width}|\n{'|-' * width}|\n"
+    header = "| " + " | ".join([" " for _ in range(width)]) + " |\n"
+    separator = "| " + " | ".join(["---" for _ in range(width)]) + " |\n"
+    table = header + separator
     for i in range(0, len(data), width):
-        table += "| " + " | ".join(data[i:i + width]) + " |\n"
+        row = data[i:i + width]
+        row += [""] * (width - len(row))
+        table += "| " + " | ".join(row) + " |\n"
     return table
 
 front_matter = "---\nlayout: default\n---\n\n"
