@@ -185,7 +185,7 @@ for title, release in releases.items():
         print(f"! ModsCraft returned {resp.status_code}")
         sys.exit(1)
     rel_soup = bs4.BeautifulSoup(ver.text, "html.parser")
-    version_output = page_header + f"## Minecraft {title} APKs\n\n"
+    version_output = page_header + f"## Minecraft {title} APKs\n"
     file_info = []
     for download in rel_soup.find_all("div", class_="file-block"):
         print("* Adding file ", end='')
@@ -206,10 +206,10 @@ for title, release in releases.items():
         size = meta.split(']')[0][1:].strip()  # [738.16 Mb] -> 738.16 Mb
         download_link = btn_a["href"]
         print(file_name)
-        file_info.append(f":package: `{file_name}`")
-        file_info.append(f":floppy_disk: {size}")
+        file_info.append(f"**:package: `{file_name}`**")
+        file_info.append(f"**:floppy_disk: {size}**")
 
-    version_output += create_md_table(file_info, ["Download", "Size"])
+    version_output += create_md_table(file_info, [" ", " "])
     print(f"= Finished work on version {title}")
     parts = title.split('.')
     if len(parts) >= 2:
