@@ -104,7 +104,7 @@ def build_main_links(latest_releases, version_prefix=""):
     
     for title in sorted_old:
         path = f"{version_prefix}26/" if title == '26' else f"{version_prefix}{title.replace('.', '/')}/mc{pathify(latest_releases[title][0])}.html"
-        old_links.append(f"**:package: Minecraft {title}**")
+        old_links.append(f"**[:package: Minecraft {title}]({path})**")
     return create_md_grid(old_links)
 
 grouped = {}
@@ -126,7 +126,7 @@ if twenty_six_versions:
     links_26 = []
     for key, (version, url) in sorted(twenty_six_versions.items(), key=lambda x: parse_version(x[0]), reverse=True):
         minor = version.split('.')[1]
-        links_26.append(f"**:package: Minecraft {version}}.html)**")
+        links_26.append(f"**[:package: Minecraft {version}]({minor}/mc{pathify(version)}.html)**")
     markdown_26 += create_md_grid(links_26)
     with open(os.path.join(writedir, "version", "26", "index.md"), "w") as f:
         f.write(markdown_26)
