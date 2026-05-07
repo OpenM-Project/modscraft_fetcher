@@ -26,6 +26,34 @@ def create_md_table(data, width):
 
 front_matter = "---\nlayout: default\n---\n\n"
 
+fallback_style = """<style>
+:root {
+  color-scheme: light;
+  --bg: #f8fafc;
+  --surface: #ffffff;
+  --text: #111827;
+  --muted: #6b7280;
+  --border: #d1d5db;
+  --accent: #2563eb;
+}
+* { box-sizing: border-box; }
+body { margin: 0; font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+.page-container { max-width: 980px; margin: 0 auto; padding: 1.5rem 1.25rem 3rem; }
+header { margin-bottom: 2rem; }
+h1, h2, h3 { color: #111827; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.site-meta { color: var(--muted); margin-bottom: 1.25rem; }
+.content > *:first-child { margin-top: 0; }
+table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
+th, td { border: 1px solid var(--border); padding: 0.75rem 0.85rem; }
+th { background: #f3f4f6; text-align: left; }
+tbody tr:nth-child(even) { background: #f8fafc; }
+.footer-note { margin-top: 2rem; color: var(--muted); font-size: 0.95rem; }
+</style>\n\n"""
+footer_note = "\n---\n*Built with Jekyll and fallback CSS.*\n"
+page_header = front_matter + fallback_style
+
 user_agents = [
     "Mozilla/5.0 (Linux; Android 13; SM-M127G Build/TP1A.220624.014; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/126.0.6478.134 Mobile Safari/537.36",
     "Mozilla/5.0 (Android 11; Mobile; rv:128.0) Gecko/128.0 Firefox/128.0",

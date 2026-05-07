@@ -1,5 +1,5 @@
 ---
-layout: null
+layout: default
 ---
 
 ## Minecraft 1.26 APKs

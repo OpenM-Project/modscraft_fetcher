@@ -1,10 +1,10 @@
 ---
-layout: null
+layout: default
 ---
 
 - :open_file_folder: Source available at [**ModsCraft.Net**](https://modscraft.net/en/mcpe/)
 - :clock2: Updated **every 72 hours** at `00:00 UTC`
-- :rocket: **Last update:** `2026-05-07 15:15:30 UTC`
+- :rocket: **Last update:** `2026-05-07 15:24:58 UTC`
 
 | | | |
 |-|-|-|
