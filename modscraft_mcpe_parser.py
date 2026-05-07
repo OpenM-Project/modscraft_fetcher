@@ -109,7 +109,7 @@ twenty_six_versions = {k: v for k, v in latest_releases.items() if k.startswith(
 if twenty_six_versions:
     # Create version/26.md
     markdown_26 = "## Minecraft 26 Versions\n\n| | | |\n|-|-|-|\n"
-    links_26 = [f"**[:package: Minecraft {k}](version/{k.split('.')[0]}/{k.split('.')[1]}/mc{pathify(v[0])}.md)**" for k, v in sorted(twenty_six_versions.items(), key=lambda x: parse_version(x[0]), reverse=True)]
+    links_26 = [f"**[:package: Minecraft {k}](26/{k.split('.')[1]}/mc{pathify(v[0])}.md)**" for k, v in sorted(twenty_six_versions.items(), key=lambda x: parse_version(x[0]), reverse=True)]
     markdown_26 += create_md_table(links_26, 3)
     os.makedirs(os.path.join(writedir, "version"), exist_ok=True)
     with open(os.path.join(writedir, "version", "26.md"), "w") as f:
@@ -177,11 +177,11 @@ sorted_old = sorted(old_titles, key=lambda x: parse_version(x) if x != '26' else
 old_links = []
 for title in sorted_old:
     if title == '26':
-        link = "version/26.md"
+        link = "26.md"
     else:
         version, url = latest_releases[title]
         parts = title.split('.')
-        link = f"version/{parts[0]}/{parts[1]}/mc{pathify(version)}.md"
+        link = f"{parts[0]}/{parts[1]}/mc{pathify(version)}.md"
     old_links.append(f"**[:package: Minecraft {title}]({link})**")
 markdown_output += f"\n{create_md_table(old_links, 3)}"
 
