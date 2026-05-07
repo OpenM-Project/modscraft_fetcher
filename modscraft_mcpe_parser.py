@@ -104,6 +104,17 @@ for key, vers in grouped.items():
     sorted_vers = sorted(vers, key=lambda x: parse_version(x[0]))
     latest_releases[key] = sorted_vers[-1]
 
+# Collect 26 versions
+twenty_six_versions = {k: v for k, v in latest_releases.items() if k.startswith('26.')}
+if twenty_six_versions:
+    # Create version/26.md
+    markdown_26 = "## Minecraft 26 Versions\n\n| | | |\n|-|-|-|\n"
+    links_26 = [f"**[:package: Minecraft {k}](version/{k.split('.')[0]}/{k.split('.')[1]}/mc{pathify(v[0])}.md)**" for k, v in sorted(twenty_six_versions.items(), key=lambda x: parse_version(x[0]), reverse=True)]
+    markdown_26 += create_md_table(links_26, 3)
+    os.makedirs(os.path.join(writedir, "version"), exist_ok=True)
+    with open(os.path.join(writedir, "version", "26.md"), "w") as f:
+        f.write(markdown_26)
+
 # Now, releases is the latest per group
 releases = {version: url for version, url in latest_releases.values()}
 for title, release in releases.items():
@@ -159,19 +170,20 @@ for title, release in releases.items():
     print("= Adding to main file")
 
 # Generate markdown sections
-old_titles = [title for title in releases if title.startswith('1.') and title != '1.26']
-new_titles = [title for title in releases if not title.startswith('1.')]
-
-if old_titles:
-    sorted_old = sorted(old_titles, key=parse_version, reverse=True)
-    old_links = [f"**[:package: Minecraft {title}](version/{title.split('.')[0]}/{title.split('.')[1]}/mc{pathify(title)}.md)**" for title in sorted_old]
-    markdown_output += f"\n{create_md_table(old_links, 3)}"
-
-for title in sorted(new_titles, key=parse_version):
-    parts = title.split('.')
-    key = f"{parts[0]}.{parts[1]}"
-    markdown_output += f"\n## Minecraft {key}\n"
-    markdown_output += f"- **[:package: Minecraft {title}](version/{parts[0]}/{parts[1]}/mc{pathify(title)}.md)**\n"
+old_titles = [k for k in latest_releases if k.startswith('1.') and k != '1.26']
+if twenty_six_versions:
+    old_titles.append('26')
+sorted_old = sorted(old_titles, key=lambda x: parse_version(x) if x != '26' else [1, 26], reverse=True)
+old_links = []
+for title in sorted_old:
+    if title == '26':
+        link = "version/26.md"
+    else:
+        version, url = latest_releases[title]
+        parts = title.split('.')
+        link = f"version/{parts[0]}/{parts[1]}/mc{pathify(version)}.md"
+    old_links.append(f"**[:package: Minecraft {title}]({link})**")
+markdown_output += f"\n{create_md_table(old_links, 3)}"
 
 print("\n= All done, writing to file")
 try:

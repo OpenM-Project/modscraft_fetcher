@@ -1,25 +1,13 @@
 - :open_file_folder: Source available at [**ModsCraft.Net**](https://modscraft.net/en/mcpe/)
 - :clock2: Updated **every 72 hours** at `00:00 UTC`
-- :rocket: **Last update:** `2026-05-07 13:42:17 UTC`
+- :rocket: **Last update:** `2026-05-07 13:49:46 UTC`
 
 | | | |
 |-|-|-|
-| **[:package: Minecraft 1.21](version/1/21/mc1.21.md)** | **[:package: Minecraft 1.20](version/1/20/mc1.20.md)** | **[:package: Minecraft 1.19](version/1/19/mc1.19.md)** |
-| **[:package: Minecraft 1.18](version/1/18/mc1.18.md)** | **[:package: Minecraft 1.17](version/1/17/mc1.17.md)** | **[:package: Minecraft 1.16](version/1/16/mc1.16.md)** |
-| **[:package: Minecraft 1.15](version/1/15/mc1.15.md)** | **[:package: Minecraft 1.14](version/1/14/mc1.14.md)** | **[:package: Minecraft 1.13](version/1/13/mc1.13.md)** |
-| **[:package: Minecraft 1.12](version/1/12/mc1.12.md)** | **[:package: Minecraft 1.11](version/1/11/mc1.11.md)** | **[:package: Minecraft 1.10](version/1/10/mc1.10.md)** |
-| **[:package: Minecraft 1.9](version/1/9/mc1.9.md)** | **[:package: Minecraft 1.8](version/1/8/mc1.8.md)** | **[:package: Minecraft 1.7](version/1/7/mc1.7.md)** |
-| **[:package: Minecraft 1.6](version/1/6/mc1.6.md)** | **[:package: Minecraft 1.5](version/1/5/mc1.5.md)** | **[:package: Minecraft 1.4](version/1/4/mc1.4.md)** |
-| **[:package: Minecraft 1.2](version/1/2/mc1.2.md)** |
-
-## Minecraft 26.12
-- **[:package: Minecraft 26.12.02](version/26/12/mc26.12.02.md)**
-
-## Minecraft 26.13
-- **[:package: Minecraft 26.13.01](version/26/13/mc26.13.01.md)**
-
-## Minecraft 26.20
-- **[:package: Minecraft 26.20.28](version/26/20/mc26.20.28.md)**
-
-## Minecraft 26.30
-- **[:package: Minecraft 26.30.27](version/26/30/mc26.30.27.md)**
+| **[:package: Minecraft 26](version/26.md)** | **[:package: Minecraft 1.21](version/1/21/mc1.21.md)** | **[:package: Minecraft 1.20](version/1/20/mc1.20.md)** |
+| **[:package: Minecraft 1.19](version/1/19/mc1.19.md)** | **[:package: Minecraft 1.18](version/1/18/mc1.18.md)** | **[:package: Minecraft 1.17](version/1/17/mc1.17.md)** |
+| **[:package: Minecraft 1.16](version/1/16/mc1.16.md)** | **[:package: Minecraft 1.15](version/1/15/mc1.15.md)** | **[:package: Minecraft 1.14](version/1/14/mc1.14.md)** |
+| **[:package: Minecraft 1.13](version/1/13/mc1.13.md)** | **[:package: Minecraft 1.12](version/1/12/mc1.12.md)** | **[:package: Minecraft 1.11](version/1/11/mc1.11.md)** |
+| **[:package: Minecraft 1.10](version/1/10/mc1.10.md)** | **[:package: Minecraft 1.9](version/1/9/mc1.9.md)** | **[:package: Minecraft 1.8](version/1/8/mc1.8.md)** |
+| **[:package: Minecraft 1.7](version/1/7/mc1.7.md)** | **[:package: Minecraft 1.6](version/1/6/mc1.6.md)** | **[:package: Minecraft 1.5](version/1/5/mc1.5.md)** |
+| **[:package: Minecraft 1.4](version/1/4/mc1.4.md)** | **[:package: Minecraft 1.2](version/1/2/mc1.2.md)** |
