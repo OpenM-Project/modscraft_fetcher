@@ -1,8 +1,0 @@
-## Minecraft 26.13.01 APKs
-| Download | Size |
-|----------|------|
-| [:package: `minecraft-26-13-01-xbox.apk`](https://modscraft.net/engine/getfile.php?id=18759&lang=en) | :floppy_disk: 707.77 Mb 
-| [:package: `minecraft-1-26-13-01-xbox-compressed.apk`](https://modscraft.net/engine/getfile.php?id=18760&lang=en) | :floppy_disk: 431.98 Mb 
-| [:package: `minecraft-26-13-01-clone-xbox.apk`](https://modscraft.net/engine/getfile.php?id=18761&lang=en) | :floppy_disk: 707.9 Mb 
-| [:package: `minecraft-26-13-01-clone-xbox-compressed.apk`](https://modscraft.net/engine/getfile.php?id=18762&lang=en) | :floppy_disk: 432.11 Mb 
-| [:package: `minecraft-26-13-01-x86-64-xbox.apk`](https://modscraft.net/engine/getfile.php?id=18763&lang=en) | :floppy_disk: 628.64 Mb 
