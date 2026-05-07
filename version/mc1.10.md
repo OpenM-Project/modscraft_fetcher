@@ -1,6 +1,6 @@
 ## Minecraft 1.10 APKs
 | Download | Size |
 |----------|------|
-| [:package: `minecraft-1-10-0-7-xbox-servers-skins.apk`](https://modscraft.net/en/downloads/5496) | :floppy_disk: ownloads: 113 56 
-| [:package: `minecraft-1-10-0-7-clone-xbox-servers-skins.apk`](https://modscraft.net/en/downloads/5495) | :floppy_disk: ownloads: 9 46 
-| [:package: `minecraft-1-10-0-7-x86-xbox-servers.apk`](https://modscraft.net/en/downloads/5497) | :floppy_disk: ownloads: 12 08 
+| [:package: `minecraft-1.10.0.7-xbox-live.apk`](https://modscraft.net/engine/getfile.php?id=5496&lang=en) | :floppy_disk: 86.4 Mb 
+| [:package: `minecraft-1.10.0.7-free-skins.apk`](https://modscraft.net/engine/getfile.php?id=5495&lang=en) | :floppy_disk: 86.45 Mb 
+| [:package: `minecraft-1.10.0.7-x86.apk`](https://modscraft.net/engine/getfile.php?id=5497&lang=en) | :floppy_disk: 89.8 Mb 

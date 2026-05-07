@@ -1,6 +1,6 @@
 ## Minecraft 1.17 APKs
 | Download | Size |
 |----------|------|
-| [:package: `minecraft-1-17-41-01-xbox-servers.apk`](https://modscraft.net/en/downloads/6745) | :floppy_disk: ownloads: 2 096 36 
-| [:package: `minecraft-1-17-41-01-xbox-servers-skins.apk`](https://modscraft.net/en/downloads/6746) | :floppy_disk: ownloads: 163 41 
-| [:package: `minecraft-1-17-41-01-xbox-servers-clone.apk`](https://modscraft.net/en/downloads/6822) | :floppy_disk: ownloads: 41 33 
+| [:package: `minecraft-1.17.41-xbox-live.apk`](https://modscraft.net/engine/getfile.php?id=6745&lang=en) | :floppy_disk: 127.45 Mb 
+| [:package: `minecraft-1.17.41-free-skins.apk`](https://modscraft.net/engine/getfile.php?id=6746&lang=en) | :floppy_disk: 127.45 Mb 
+| [:package: `minecraft-1.17.41-clone-version.apk`](https://modscraft.net/engine/getfile.php?id=6822&lang=en) | :floppy_disk: 127.35 Mb 

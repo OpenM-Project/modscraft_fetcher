@@ -1,6 +1,6 @@
 - :open_file_folder: Source available at [**ModsCraft.Net**](https://modscraft.net/en/mcpe/)
 - :clock2: Updated **every 72 hours** at `00:00 UTC`
-- :rocket: **Last update:** `2025-12-31 01:15:35 UTC`
+- :rocket: **Last update:** `2026-05-07 13:29:53 UTC`
 
 | | | |
 |-|-|-|
@@ -11,3 +11,15 @@
 | **[:package: Minecraft 1.9](version/mc1.9.md)** | **[:package: Minecraft 1.8](version/mc1.8.md)** | **[:package: Minecraft 1.7](version/mc1.7.md)** |
 | **[:package: Minecraft 1.6](version/mc1.6.md)** | **[:package: Minecraft 1.5](version/mc1.5.md)** | **[:package: Minecraft 1.4](version/mc1.4.md)** |
 | **[:package: Minecraft 1.2](version/mc1.2.md)** |
+
+## Minecraft 26.12
+- **[:package: Minecraft 26.12.02](version/mc26.12.02.md)**
+
+## Minecraft 26.13
+- **[:package: Minecraft 26.13.01](version/mc26.13.01.md)**
+
+## Minecraft 26.20
+- **[:package: Minecraft 26.20.28](version/mc26.20.28.md)**
+
+## Minecraft 26.30
+- **[:package: Minecraft 26.30.27](version/mc26.30.27.md)**

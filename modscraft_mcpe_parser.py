@@ -58,8 +58,54 @@ if not resp.ok:
     print(f"! ModsCraft returned {resp.status_code}")
     sys.exit(1)
 soup = bs4.BeautifulSoup(resp.text, "html.parser")
-releases = {i.text: i["href"] for i in soup.find("div", class_="versions-history").find_all("a")}
-version_links = []
+releases = {}
+carousel = soup.find("div", class_="versions-history-carousel")
+if carousel:
+    for card in carousel.find_all("div", class_="version-card"):
+        a = card.find("a")
+        if a:
+            version_span = a.find("span", class_="version-number")
+            if version_span:
+                version = version_span.text.replace("Version ", "")
+                releases[version] = a["href"]
+
+# Parse main articles for newer versions
+for article in soup.find_all("article", class_="shortstory"):
+    h2 = article.find("h2")
+    if h2 and h2.text.startswith("Minecraft "):
+        version = h2.text.replace("Minecraft ", "")
+        a = article.find("a")
+        if a and "href" in a.attrs:
+            releases[version] = a["href"]
+
+def parse_version(v):
+    parts = []
+    for p in v.split('.'):
+        if '/' in p:
+            p = p.split('/')[0]
+        try:
+            parts.append(int(p))
+        except ValueError:
+            parts.append(0)
+    return parts
+
+# Group by major.minor and select latest
+grouped = {}
+for version, url in releases.items():
+    parts = version.split('.')
+    if len(parts) >= 2:
+        key = f"{parts[0]}.{parts[1]}"
+        if key not in grouped:
+            grouped[key] = []
+        grouped[key].append((version, url))
+
+latest_releases = {}
+for key, vers in grouped.items():
+    sorted_vers = sorted(vers, key=lambda x: parse_version(x[0]))
+    latest_releases[key] = sorted_vers[-1]
+
+# Now, releases is the latest per group
+releases = {version: url for version, url in latest_releases.values()}
 for title, release in releases.items():
     print(f"\n= Starting work on version {title}")
     ver = requests.get(release, headers={"User-Agent": user_agent})
@@ -70,19 +116,25 @@ for title, release in releases.items():
     version_output = f"## Minecraft {title} APKs\n"
     version_output += "| Download | Size |\n"
     version_output += "|----------|------|\n"
-    for download in rel_soup.find_all("a", class_="download-item"):
+    for download in rel_soup.find_all("div", class_="file-block"):
         print("* Adding file ", end='')
-        down_req = requests.get(download["href"], headers={"User-Agent": user_agent})
-        if not down_req.ok:
-            print(f"! ModsCraft returned {resp.status_code}")
-            sys.exit(1)
-        apk = bs4.BeautifulSoup(down_req.text, "html.parser")
-        download_id = re.search(r'id=(\d+)', download["href"]).group(1)
-        down_spans = download.find_all("span")
-        file_name = apk.find("p").text
+        title_span = download.find("span", class_="file-block__title")
+        filename_span = download.find("span", class_="file-block__filename")
+        meta_div = download.find("div", class_="file-block__meta")
+        btn_a = download.find("a", class_="file-block__btn")
+        if not (title_span and meta_div and btn_a):
+            print("Skipping incomplete file-block")
+            continue
+        file_title = title_span.text
+        if filename_span:
+            file_name = filename_span.text
+        else:
+            # For old versions, extract filename from title
+            file_name = file_title.replace("Download ", "").replace("Minecraft ", "minecraft-").replace(" ", "-").lower() + ".apk"
+        meta = meta_div.text
+        size = meta.split(']')[0][1:]  # [738.16 Mb] -> 738.16 Mb
+        download_link = btn_a["href"]
         print(file_name)
-        size = down_spans[2].text[1:-1]
-        download_link = f"https://modscraft.net/en/downloads/{download_id}"
         version_output += f"| [:package: `{file_name}`]({download_link}) | :floppy_disk: {size} \n"
     print(f"= Finished work on version {title}")
     filename = f"mc{pathify(title)}.md"
@@ -96,8 +148,21 @@ for title, release in releases.items():
         print(f"! I/O error while writing to file: {e}")
         sys.exit(1)
     print("= Adding to main file")
-    version_links.append(f"**[:package: Minecraft {title}](version/{filename})**")
-markdown_output += f"\n{create_md_table(version_links, 3)}"
+
+# Generate markdown sections
+old_titles = [title for title in releases if title.startswith('1.') and title != '1.26']
+new_titles = [title for title in releases if not title.startswith('1.')]
+
+if old_titles:
+    sorted_old = sorted(old_titles, key=parse_version, reverse=True)
+    old_links = [f"**[:package: Minecraft {title}](version/mc{pathify(title)}.md)**" for title in sorted_old]
+    markdown_output += f"\n{create_md_table(old_links, 3)}"
+
+for title in sorted(new_titles, key=parse_version):
+    parts = title.split('.')
+    key = f"{parts[0]}.{parts[1]}"
+    markdown_output += f"\n## Minecraft {key}\n"
+    markdown_output += f"- **[:package: Minecraft {title}](version/mc{pathify(title)}.md)**\n"
 
 print("\n= All done, writing to file")
 try:

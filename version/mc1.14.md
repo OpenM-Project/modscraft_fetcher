@@ -1,7 +1,7 @@
 ## Minecraft 1.14 APKs
 | Download | Size |
 |----------|------|
-| [:package: `mcpe-1-14-60-5-xbox.apk`](https://modscraft.net/en/downloads/6987) | :floppy_disk: ownloads: 118 05 
-| [:package: `minecraft-1-14-60-5-xbox-servers-skins.apk`](https://modscraft.net/en/downloads/6988) | :floppy_disk: ownloads: 12 03 
-| [:package: `minecraft-1-14-60-5-clone-xbox-servers-skins.apk`](https://modscraft.net/en/downloads/6989) | :floppy_disk: ownloads: 3 39 
-| [:package: `minecraft-1-14-60-5-x86-xbox.apk`](https://modscraft.net/en/downloads/4236) | :floppy_disk: ownloads: 26 57 
+| [:package: `minecraft-pe-1.14.60-(xbox-live-/-android-4.2+).apk`](https://modscraft.net/engine/getfile.php?id=6987&lang=en) | :floppy_disk: 91.46 Mb 
+| [:package: `minecraft-pe-1.14.60-(free-skins-/-android-4.2+).apk`](https://modscraft.net/engine/getfile.php?id=6988&lang=en) | :floppy_disk: 91.46 Mb 
+| [:package: `minecraft-pe-1.14.60-(clone-version-/-android-4.2+).apk`](https://modscraft.net/engine/getfile.php?id=6989&lang=en) | :floppy_disk: 91.51 Mb 
+| [:package: `minecraft-pe-1.14.60-(x86-/-android-4.2+).apk`](https://modscraft.net/engine/getfile.php?id=4236&lang=en) | :floppy_disk: 95.67 Mb 
