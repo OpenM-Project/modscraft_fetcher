@@ -138,8 +138,17 @@ for title, release in releases.items():
         version_output += f"| [:package: `{file_name}`]({download_link}) | :floppy_disk: {size} \n"
     print(f"= Finished work on version {title}")
     filename = f"mc{pathify(title)}.md"
+    parts = title.split('.')
+    if len(parts) >= 2:
+        major = parts[0]
+        minor = parts[1]
+        subdir = os.path.join(writedir, "version", major, minor)
+        os.makedirs(subdir, exist_ok=True)
+        file_path = os.path.join(subdir, filename)
+    else:
+        file_path = os.path.join(writedir, "version", filename)
     try:
-        with open(os.path.join(writedir, "version", filename), "w") as f:
+        with open(file_path, "w") as f:
             f.write(version_output)
     except PermissionError:
         print("! Unable to access file, not enough permissions")
@@ -155,14 +164,14 @@ new_titles = [title for title in releases if not title.startswith('1.')]
 
 if old_titles:
     sorted_old = sorted(old_titles, key=parse_version, reverse=True)
-    old_links = [f"**[:package: Minecraft {title}](version/mc{pathify(title)}.md)**" for title in sorted_old]
+    old_links = [f"**[:package: Minecraft {title}](version/{title.split('.')[0]}/{title.split('.')[1]}/mc{pathify(title)}.md)**" for title in sorted_old]
     markdown_output += f"\n{create_md_table(old_links, 3)}"
 
 for title in sorted(new_titles, key=parse_version):
     parts = title.split('.')
     key = f"{parts[0]}.{parts[1]}"
     markdown_output += f"\n## Minecraft {key}\n"
-    markdown_output += f"- **[:package: Minecraft {title}](version/mc{pathify(title)}.md)**\n"
+    markdown_output += f"- **[:package: Minecraft {title}](version/{parts[0]}/{parts[1]}/mc{pathify(title)}.md)**\n"
 
 print("\n= All done, writing to file")
 try:
