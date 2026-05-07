@@ -77,7 +77,7 @@ user_agents = [
 user_agent = random.choice(user_agents)
 print(f"* Parser has started")
 print(f"= User agent for today is \"{user_agent}\"")
-markdown_output = front_matter + f"- :open_file_folder: Source available at [**ModsCraft.Net**](https://modscraft.net/en/mcpe/)"
+markdown_output = page_header + f"- :open_file_folder: Source available at [**ModsCraft.Net**](https://modscraft.net/en/mcpe/)"
 markdown_output += f"\n- :clock2: Updated **every 72 hours** at `00:00 UTC`"
 markdown_output += f"\n- :rocket: **Last update:** `{datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S')} UTC`\n"
 print("* Creating directory 'version'")
@@ -160,13 +160,13 @@ for key, vers in grouped.items():
 twenty_six_versions = {k: v for k, v in latest_releases.items() if k.startswith('26.')}
 if twenty_six_versions:
     # Create version/26/index.md
-    markdown_26 = front_matter + "## Minecraft 26 Versions\n\n| | | |\n|-|-|-|\n"
+    markdown_26 = page_header + "## Minecraft 26 Versions\n\n| | | |\n|-|-|-|\n"
     links_26 = []
     for key, (version, url) in sorted(twenty_six_versions.items(), key=lambda x: parse_version(x[0]), reverse=True):
         minor = version.split('.')[1]
         file_name = f"mc{pathify(version)}.html"
         links_26.append(f"**[:package: Minecraft {version}]({minor}/{file_name})**")
-    markdown_26 += create_md_table(links_26, 3)
+    markdown_26 += create_md_table(links_26, 3) + footer_note
     os.makedirs(os.path.join(writedir, "version", "26"), exist_ok=True)
     with open(os.path.join(writedir, "version", "26", "index.md"), "w") as f:
         f.write(markdown_26)
@@ -180,7 +180,7 @@ for title, release in releases.items():
         print(f"! ModsCraft returned {resp.status_code}")
         sys.exit(1)
     rel_soup = bs4.BeautifulSoup(ver.text, "html.parser")
-    version_output = front_matter + f"## Minecraft {title} APKs\n"
+    version_output = page_header + f"## Minecraft {title} APKs\n"
     version_output += "| Download | Size |\n"
     version_output += "|----------|------|\n"
     for download in rel_soup.find_all("div", class_="file-block"):
@@ -217,7 +217,7 @@ for title, release in releases.items():
         file_path = os.path.join(writedir, "version", filename)
     try:
         with open(file_path, "w") as f:
-            f.write(version_output)
+            f.write(version_output + footer_note)
     except PermissionError:
         print("! Unable to access file, not enough permissions")
         sys.exit(1)
@@ -232,7 +232,7 @@ markdown_output += f"\n{build_main_links(latest_releases, 'version/')}"
 print("\n= All done, writing to file")
 try:
     with open(os.path.join(sys.argv[1]), "w") as f:
-        f.write(markdown_output)
+        f.write(markdown_output + footer_note)
 except PermissionError:
     print("! Unable to access file, not enough permissions")
     sys.exit(1)
