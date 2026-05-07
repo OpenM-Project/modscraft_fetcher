@@ -1,8 +1,0 @@
-## Minecraft 26.12.02 APKs
-| Download | Size |
-|----------|------|
-| [:package: `minecraft-26-12-02-xbox.apk`](https://modscraft.net/engine/getfile.php?id=18706&lang=en) | :floppy_disk: 707.76 Mb 
-| [:package: `minecraft-26-12-02-xbox-compressed.apk`](https://modscraft.net/engine/getfile.php?id=18707&lang=en) | :floppy_disk: 431.97 Mb 
-| [:package: `minecraft-26-12-02-clone-xbox.apk`](https://modscraft.net/engine/getfile.php?id=18708&lang=en) | :floppy_disk: 707.9 Mb 
-| [:package: `minecraft-26-12-02-clone-xbox-compressed.apk`](https://modscraft.net/engine/getfile.php?id=18709&lang=en) | :floppy_disk: 432.11 Mb 
-| [:package: `minecraft-26-12-02-x86-64-xbox.apk`](https://modscraft.net/engine/getfile.php?id=18710&lang=en) | :floppy_disk: 628.65 Mb 

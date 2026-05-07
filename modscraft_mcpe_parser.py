@@ -1,6 +1,7 @@
 import re
 import os
 import random
+import shutil
 import sys
 from datetime import datetime, timezone
 
@@ -51,12 +52,11 @@ markdown_output += f"\n- :clock2: Updated **every 72 hours** at `00:00 UTC`"
 markdown_output += f"\n- :rocket: **Last update:** `{datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S')} UTC`\n"
 print("* Creating directory 'version'")
 writedir = os.path.dirname(sys.argv[1])
-os.makedirs(os.path.join(writedir, "version"), exist_ok=True)
-for old_file in sorted(os.listdir(os.path.join(writedir, "version"))):
-    path = os.path.join(writedir, "version", old_file)
-    if os.path.isfile(path) and path.endswith(".md"):
-        print(f"* Removing stale version file: {old_file}")
-        os.remove(path)
+version_dir = os.path.join(writedir, "version")
+if os.path.exists(version_dir):
+    print("* Removing existing version directory")
+    shutil.rmtree(version_dir)
+os.makedirs(version_dir, exist_ok=True)
 print("* Getting releases")
 resp = requests.get("https://modscraft.net/en/mcpe/", headers={"User-Agent": user_agent})
 if not resp.ok:
@@ -131,7 +131,11 @@ twenty_six_versions = {k: v for k, v in latest_releases.items() if k.startswith(
 if twenty_six_versions:
     # Create version/26/index.md
     markdown_26 = "## Minecraft 26 Versions\n\n| | | |\n|-|-|-|\n"
-    links_26 = [f"**[:package: Minecraft {k}]({k.split('.')[1]}/)**" for k, v in sorted(twenty_six_versions.items(), key=lambda x: parse_version(x[0]), reverse=True)]
+    links_26 = []
+    for key, (version, url) in sorted(twenty_six_versions.items(), key=lambda x: parse_version(x[0]), reverse=True):
+        minor = version.split('.')[1]
+        file_name = f"mc{pathify(version)}.html"
+        links_26.append(f"**[:package: Minecraft {version}]({minor}/{file_name})**")
     markdown_26 += create_md_table(links_26, 3)
     os.makedirs(os.path.join(writedir, "version", "26"), exist_ok=True)
     with open(os.path.join(writedir, "version", "26", "index.md"), "w") as f:
@@ -171,13 +175,7 @@ for title, release in releases.items():
         version_output += f"| [:package: `{file_name}`]({download_link}) | :floppy_disk: {size} \n"
     print(f"= Finished work on version {title}")
     parts = title.split('.')
-    if title.startswith('26.') and len(parts) >= 2:
-        major = parts[0]
-        minor = parts[1]
-        subdir = os.path.join(writedir, "version", major, minor)
-        os.makedirs(subdir, exist_ok=True)
-        file_path = os.path.join(subdir, "index.md")
-    elif len(parts) >= 2:
+    if len(parts) >= 2:
         major = parts[0]
         minor = parts[1]
         subdir = os.path.join(writedir, "version", major, minor)

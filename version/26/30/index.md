@@ -1,8 +1,0 @@
-## Minecraft 26.30.27 APKs
-| Download | Size |
-|----------|------|
-| [:package: `minecraft-26-30-27-xbox.apk`](https://modscraft.net/engine/getfile.php?id=19002&lang=en) | :floppy_disk: 746.99 Mb 
-| [:package: `minecraft-26-30-27-xbox-compressed.apk`](https://modscraft.net/engine/getfile.php?id=19003&lang=en) | :floppy_disk: 471.2 Mb 
-| [:package: `minecraft-26-30-27-clone-xbox.apk`](https://modscraft.net/engine/getfile.php?id=19004&lang=en) | :floppy_disk: 747.13 Mb 
-| [:package: `minecraft-26-30-27-clone-xbox-compressed.apk`](https://modscraft.net/engine/getfile.php?id=19005&lang=en) | :floppy_disk: 471.34 Mb 
-| [:package: `minecraft-26-30-27-x86-64-xbox.apk`](https://modscraft.net/engine/getfile.php?id=19006&lang=en) | :floppy_disk: 656.53 Mb 
