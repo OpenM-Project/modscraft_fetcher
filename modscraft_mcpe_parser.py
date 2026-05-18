@@ -182,6 +182,7 @@ if built_time:
     generated_at = built_time
 else:
     generated_at = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S")
+print(f"* Generated at: {generated_at} UTC")
 
 style_source = Path(__file__).resolve().parent / "style.css"
 if style_source.exists():

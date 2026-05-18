@@ -39,6 +39,23 @@ jobs:
         env:
           BUILD_TIME: ${{ env.BUILD_TIME }}
 
+      - name: Inspect generated site
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          p = Path('_site/index.html')
+          print('INDEX EXISTS', p.exists())
+          if p.exists():
+              text = p.read_text()
+              m = re.search(r'Last update: <code>(.*?) UTC</code>', text)
+              print('LAST UPDATE:', m.group(1) if m else 'NONE')
+              print('PAGE SIZE:', len(text))
+          print('SITE FILES:')
+          for path in sorted(Path('_site').rglob('*')):
+              print(path)
+          PY
+
       - name: Upload static site artifact
         uses: actions/upload-pages-artifact@v3
         with:
