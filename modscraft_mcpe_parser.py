@@ -20,7 +20,7 @@ if len(sys.argv) != 2:
 
 
 def pathify(string):
-    return re.sub(r"[^a-z0-9_.-]", "", string.replace(" ", "_").lower())
+    return re.sub(r"[^a-z0-9_.-]", "", string.replace(" ", "_").replace("/", "-").lower())
 
 
 def parse_version(v):
@@ -33,6 +33,15 @@ def parse_version(v):
         except ValueError:
             parts.append(0)
     return parts
+
+
+def parse_release_title(title):
+    status = None
+    match = re.search(r"\[(Beta|Release)\]", title, re.I)
+    if match:
+        status = match.group(1).capitalize()
+        title = re.sub(r"\s*\[.*?\]\s*", "", title).strip()
+    return title, status
 
 
 def html_escape(text):
@@ -110,10 +119,11 @@ def build_main_links(latest_releases):
 
 def build_26_index(twenty_six_versions):
     links = []
-    for _, (version, _) in sorted(twenty_six_versions.items(), key=lambda x: parse_version(x[0]), reverse=True):
+    for version, (url, status) in sorted(twenty_six_versions.items(), key=lambda x: parse_version(x[0]), reverse=True):
         minor = version.split(".")[1]
+        label = status or "Release"
         links.append(
-            f"<strong><a href=\"{minor}/mc{pathify(version)}.html\">📦 Minecraft {html_escape(version)}</a></strong>"
+            f"<strong><a href=\"{minor}/mc{pathify(version)}.html\">📦 Minecraft {html_escape(version)} ({html_escape(label)})</a></strong>"
         )
     return create_html_grid(links)
 
@@ -176,43 +186,54 @@ if carousel:
         version_span = a.find("span", class_="version-number") if a else None
         if version_span and a and a.has_attr("href"):
             version = version_span.text.replace("Version ", "").strip()
-            releases[version] = a["href"]
+            releases[version] = {"url": a["href"], "status": None}
 
 for article in soup.find_all("article", class_="shortstory"):
     h2 = article.find("h2")
     if h2 and h2.text.startswith("Minecraft "):
-        version = h2.text.replace("Minecraft ", "").strip()
+        title_text = h2.text.replace("Minecraft ", "").strip()
+        version, status = parse_release_title(title_text)
         a = article.find("a")
         if a and a.has_attr("href"):
-            releases[version] = a["href"]
+            releases[version] = {"url": a["href"], "status": status}
 
 
 grouped = {}
-for version, url in releases.items():
+for version, data in releases.items():
     parts = version.split(".")
     if len(parts) >= 2:
         key = f"{parts[0]}.{parts[1]}"
-        grouped.setdefault(key, []).append((version, url))
+        grouped.setdefault(key, []).append((version, data["url"], data["status"]))
 
 latest_releases = {}
 for key, vers in grouped.items():
     sorted_vers = sorted(vers, key=lambda x: parse_version(x[0]))
     latest_releases[key] = sorted_vers[-1]
 
+all_26_versions = {
+    version: (info["url"], info["status"])
+    for version, info in releases.items()
+    if version.startswith("26.")
+}
 
-twenty_six_versions = {k: v for k, v in latest_releases.items() if k.startswith("26.")}
-if twenty_six_versions:
+if all_26_versions:
     index_dir = site_root / "version" / "26"
     index_dir.mkdir(parents=True, exist_ok=True)
-    body_html = "<p>All Minecraft 26 versions.</p>\n" + build_26_index(twenty_six_versions)
+    body_html = "<p>All Minecraft 26 versions.</p>\n" + build_26_index(all_26_versions)
     page_path = index_dir / "index.html"
     css_path = local_asset_path(page_path, site_root, "style.css")
     home_href = local_asset_path(page_path, site_root, "index.html")
     page_html = render_page("Minecraft 26 Versions", body_html, css_path, home_href)
     page_path.write_text(page_html, encoding="utf-8")
 
-releases = {version: url for version, url in latest_releases.values()}
-for title, release in releases.items():
+releases = {}
+for version, url, status in latest_releases.values():
+    if not version.startswith("26."):
+        releases[version] = (url, status)
+for version, (url, status) in all_26_versions.items():
+    releases[version] = (url, status)
+
+for title, (release, status) in releases.items():
     print(f"* Parsing {title}...", end="\r")
     ver = requests.get(release, headers={"User-Agent": user_agent})
     if not ver.ok:
@@ -249,11 +270,15 @@ for title, release in releases.items():
     css_path = local_asset_path(page_path, site_root, "style.css")
     home_href = local_asset_path(page_path, site_root, "index.html")
 
+    status_html = (
+        f"<li>📌 Release type: <strong>{html_escape(status)}</strong></li>\n" if status else ""
+    )
     body_html = (
         "<ul>"
         f"<li>📁 Source available at <a href=\"https://modscraft.net/en/mcpe/\"><strong>ModsCraft.Net</strong></a></li>"
         f"<li>🕒 Updated <strong>every 72 hours</strong> at <code>00:00 UTC</code></li>"
         f"<li>🚀 Last update: <code>{datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S')} UTC</code></li>"
+        f"{status_html}"
         "</ul>\n"
         + render_download_table(file_info)
     )
