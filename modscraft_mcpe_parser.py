@@ -35,12 +35,19 @@ def parse_version(v):
     return parts
 
 
-def parse_release_title(title):
+def parse_release_title(title, desc=None):
     status = None
     match = re.search(r"\[(Beta|Release)\]", title, re.I)
     if match:
         status = match.group(1).capitalize()
         title = re.sub(r"\s*\[.*?\]\s*", "", title).strip()
+
+    if status is None and desc:
+        if re.search(r"\b(beta|preview)\b", desc, re.I):
+            status = "Beta"
+        elif re.search(r"\brelease\b", desc, re.I):
+            status = "Release"
+
     return title, status
 
 
@@ -192,7 +199,9 @@ for article in soup.find_all("article", class_="shortstory"):
     h2 = article.find("h2")
     if h2 and h2.text.startswith("Minecraft "):
         title_text = h2.text.replace("Minecraft ", "").strip()
-        version, status = parse_release_title(title_text)
+        desc = article.find("p")
+        desc_text = desc.text.strip() if desc else ""
+        version, status = parse_release_title(title_text, desc_text)
         a = article.find("a")
         if a and a.has_attr("href"):
             releases[version] = {"url": a["href"], "status": status}
