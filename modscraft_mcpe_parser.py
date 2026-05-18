@@ -150,8 +150,11 @@ print(f"* Starting Parser (UA: {user_agent})")
 output_file = Path(sys.argv[1])
 site_root = output_file.parent
 if site_root.exists():
-    print("* Removing existing static site directory")
-    shutil.rmtree(site_root)
+    if site_root.resolve() == Path.cwd().resolve():
+        print("* Output path is at repository root; skipping directory removal")
+    else:
+        print("* Removing existing static site directory")
+        shutil.rmtree(site_root)
 site_root.mkdir(parents=True, exist_ok=True)
 
 style_source = Path(__file__).resolve().parent / "style.css"
