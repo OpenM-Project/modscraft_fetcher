@@ -177,6 +177,12 @@ if site_root.exists():
         shutil.rmtree(site_root)
 site_root.mkdir(parents=True, exist_ok=True)
 
+built_time = os.environ.get("BUILD_TIME")
+if built_time:
+    generated_at = built_time
+else:
+    generated_at = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S")
+
 style_source = Path(__file__).resolve().parent / "style.css"
 if style_source.exists():
     shutil.copy(style_source, site_root / "style.css")
@@ -289,7 +295,7 @@ for title, (release, status) in releases.items():
         "<ul>"
         f"<li>📁 Source available at <a href=\"https://modscraft.net/en/mcpe/\"><strong>ModsCraft.Net</strong></a></li>"
         f"<li>🕒 Updated <strong>every 72 hours</strong> at <code>00:00 UTC</code></li>"
-        f"<li>🚀 Last update: <code>{datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S')} UTC</code></li>"
+        f"<li>🚀 Last update: <code>{generated_at} UTC</code></li>"
         f"{status_html}"
         "</ul>\n"
         + render_download_table(file_info)
@@ -302,7 +308,7 @@ main_body = (
     "<ul>"
     "<li>📁 Source available at <a href=\"https://modscraft.net/en/mcpe/\"><strong>ModsCraft.Net</strong></a></li>"
     "<li>🕒 Updated <strong>every 72 hours</strong> at <code>00:00 UTC</code></li>"
-    f"<li>🚀 Last update: <code>{datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S')} UTC</code></li>"
+    f"<li>🚀 Last update: <code>{generated_at} UTC</code></li>"
     "</ul>\n"
     "<h2>Available Major Versions</h2>\n"
     + build_main_links(latest_releases)

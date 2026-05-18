@@ -28,11 +28,16 @@ jobs:
         with:
           python-version: '3.x'
 
+      - name: Record build timestamp
+        run: echo "BUILD_TIME=$(date -u '+%Y-%m-%d %H:%M:%S')" >> $GITHUB_ENV
+
       - name: Install dependencies
         run: python3 -m pip install -r requirements.txt
 
       - name: Run parser
         run: python3 modscraft_mcpe_parser.py _site/index.html
+        env:
+          BUILD_TIME: ${{ env.BUILD_TIME }}
 
       - name: Upload static site artifact
         uses: actions/upload-pages-artifact@v3
