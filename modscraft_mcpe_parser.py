@@ -43,9 +43,12 @@ def parse_release_title(title, desc=None):
         title = re.sub(r"\s*\[.*?\]\s*", "", title).strip()
 
     if status is None and desc:
-        if re.search(r"\b(beta|preview)\b", desc, re.I):
+        desc_lower = desc.lower()
+        if re.search(r"\b(beta|preview|test build|test-build|preview build|beta build)\b", desc_lower, re.I):
             status = "Beta"
-        elif re.search(r"\brelease\b", desc, re.I):
+        elif re.search(r"\breleased\b", desc_lower):
+            status = "Release"
+        elif re.search(r"\brelease\b", desc_lower):
             status = "Release"
 
     return title, status
