@@ -38,6 +38,12 @@ jobs:
         run: python3 modscraft_mcpe_parser.py _site/index.html
         env:
           BUILD_TIME: ${{ env.BUILD_TIME }}
+      
+      - name: Cache-bust CSS and JS assets
+        run: |
+          BUILD_ID=$(date +%s)
+          sed -i "s/\.css/.css?v=${BUILD_ID}/g" _site/index.html
+          sed -i "s/\.js/.js?v=${BUILD_ID}/g" _site/index.html
 
       - name: Inspect generated site
         run: |
