@@ -6,11 +6,13 @@ import shutil
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
+from urllib.parse import urljoin
 
 import bs4
 import cloudscraper
 
 requests = cloudscraper.create_scraper()
+BASE_URL = "https://modscraft.net"
 
 if len(sys.argv) != 2:
     print(f"Error: This program needs 1 argument, got {len(sys.argv) - 1}\n")
@@ -56,6 +58,10 @@ def parse_release_title(title, desc=None):
 
 def html_escape(text):
     return html.escape(text, quote=True)
+
+
+def absolute_url(url):
+    return urljoin(BASE_URL, url)
 
 
 def create_html_grid(items, cols=3):
@@ -203,7 +209,7 @@ if carousel:
         version_span = a.find("span", class_="version-number") if a else None
         if version_span and a and a.has_attr("href"):
             version = version_span.text.replace("Version ", "").strip()
-            releases[version] = {"url": a["href"], "status": None}
+            releases[version] = {"url": absolute_url(a["href"]), "status": None}
 
 for article in soup.find_all("article", class_="shortstory"):
     h2 = article.find("h2")
@@ -214,7 +220,7 @@ for article in soup.find_all("article", class_="shortstory"):
         version, status = parse_release_title(title_text, desc_text)
         a = article.find("a")
         if a and a.has_attr("href"):
-            releases[version] = {"url": a["href"], "status": status}
+            releases[version] = {"url": absolute_url(a["href"]), "status": status}
 
 
 grouped = {}
@@ -254,7 +260,7 @@ for version, (url, status) in all_26_versions.items():
 
 for title, (release, status) in releases.items():
     print(f"* Parsing {title}...", end="\r")
-    ver = requests.get(release, headers={"User-Agent": user_agent})
+    ver = requests.get(absolute_url(release), headers={"User-Agent": user_agent})
     if not ver.ok:
         print(f"! Skipping {title} (Error {ver.status_code})")
         continue
@@ -276,7 +282,7 @@ for title, (release, status) in releases.items():
             else title_span.text.replace("Download ", "").replace("Minecraft ", "minecraft-").replace(" ", "-").lower() + ".apk"
         )
         size = meta_div.text.split("]")[0][1:].strip()
-        file_info.append((file_name, btn_a["href"], size))
+        file_info.append((file_name, absolute_url(btn_a["href"]), size))
 
     parts = title.split(".")
     if len(parts) >= 2:
